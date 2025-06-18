@@ -1,0 +1,20 @@
+dependencies = { }
+
+[package]
+name = "xxhash"
+version = "1.0.0"
+description = "An implementation of the 32-bit XXHash algorithm in Motoko"
+repository = "https://github.com/nirvana369/xxhash"
+keywords = [
+  "hash",
+  "xxhash",
+  "xxhash32",
+  "non-cryptographic",
+  "wasm",
+  "utility"
+]
+license = "MIT"
+
+[dev-dependencies]
+test = "2.1.1"
+bench = "1.0.0"
