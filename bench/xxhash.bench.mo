@@ -15,6 +15,7 @@ import Buffer "mo:base/Buffer";
 import Iter "mo:base/Iter";
 import Nat8 "mo:base/Nat8";
 import Array "mo:base/Array";
+import Nat32 "mo:base/Nat32";
 import {hash; xxhash} "../src/lib";
 
 
@@ -56,13 +57,13 @@ module {
                 case ("xxhash") {
                     for (i in Iter.range(1, n)) {
                         let bytes = genBytes(1, b);
-                        ignore xxhash(#bytes bytes, i);
+                        ignore xxhash(#bytes bytes, ?Nat32.fromNat(i));
                     };
                 };
                 case ("xxhash-10kb") {
                     for (i in Iter.range(1, n)) {
                         let bytes = genBytes(10, b);
-                        ignore xxhash(#bytes bytes, i);
+                        ignore xxhash(#bytes bytes, ?Nat32.fromNat(i));
                     };
                 };
                 case _ {};

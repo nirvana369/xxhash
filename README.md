@@ -29,8 +29,13 @@ let bytesInput : [Nat8] = [1, 11, 111, 222];
 let blobInput : Blob = Blob.fromArray([110, 105, 114, 118, 97, 110, 97, 51, 54, 57]);
 let seed : Nat = 0;
 
-let hexOutput : Text = xxhash(#blob blobInput, seed);
-let hexOutput1 : Text = xxhash(#text textInput, seed);
+ /**
+* @param input - byte array / blob / text
+* @param seed - optional seed (32-bit unsigned);
+*/
+
+let hexOutput : Text = xxhash(#blob blobInput, ?seed);
+let hexOutput1 : Text = xxhash(#text textInput, null);
 
 let output : Nat = hash(#bytes bytesInput, seed);
 ```
