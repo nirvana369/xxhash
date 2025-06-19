@@ -13,6 +13,7 @@ import XXHash "./xxhash32";
 import Text "mo:base/Text";
 import Blob "mo:base/Blob";
 import Nat64 "mo:base/Nat64";
+import Option "mo:base/Option";
 
 
 module {
@@ -23,28 +24,29 @@ module {
         #blob: Blob;
     };
 
-    public func hash(input: XXHashInput, seed: Nat) : Nat {
+    public func hash(input: XXHashInput, seed: ?Nat32) : Nat32 {
+        let s = Nat64.fromNat32(Option.get<Nat32>(seed, 0));
         let output = switch (input) {
                         case (#text(text)) {
                             let bytes = Text.encodeUtf8(text);
-                            XXHash.hash(Blob.toArray(bytes), Nat64.fromNat(seed));
+                            XXHash.hash(Blob.toArray(bytes), s);
                         };
                         case (#bytes(bytes)) {
-                            XXHash.hash(bytes, Nat64.fromNat(seed));
+                            XXHash.hash(bytes, s);
                         };
                         case (#blob(blob)) {
-                            XXHash.hash(Blob.toArray(blob), Nat64.fromNat(seed));
+                            XXHash.hash(Blob.toArray(blob), s);
                         };
                     };
-        Nat64.toNat(output);    
+        Nat64.toNat32(output);    
     };
 
-    public func xxhash(input: XXHashInput, seed: Nat) : Text {
+    public func xxhash(input: XXHashInput, seed: ?Nat32) : Text {
         let hashValue = hash(input, seed);
         nat2Hex(hashValue);
     };
 
-    public func nat2Hex(x : Nat) : Text {
+    public func nat2Hex(x : Nat32) : Text {
         if (x == 0) return "0";
         var ret = "";
         var t = x;
